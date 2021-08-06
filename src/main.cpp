@@ -58,6 +58,7 @@ int main(int argc, char** argv)
 					mouse_held = false;
 					mandel->update(rect.x, rect.y, rect.w);
 					drawn = false;
+					SDL_DestroyTexture(background);
 				}
 				break;
 
