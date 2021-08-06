@@ -23,16 +23,15 @@ int main(int argc, char** argv)
 	SDL_Renderer* renderer;
 	SDL_Texture* background = NULL;
 	
-
 	SDL_CreateWindowAndRenderer(SCR_WIDTH, SCR_HEIGHT, 0, &win, &renderer);
 	SDL_RenderSetLogicalSize(renderer, SCR_WIDTH, SCR_HEIGHT);
 
 	Mandelbrot* mandel = new Mandelbrot(SCR_WIDTH, SCR_HEIGHT, renderer);
 
 	bool drawn = false;
+	bool mouse_held = false;
 
 	SDL_Event ev;
-	bool mouse_held = false;
 	SDL_Rect rect;
 
 	bool running = true;
@@ -43,8 +42,6 @@ int main(int argc, char** argv)
 			drawn = true;
 		}
 
-		//SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
-		//SDL_RenderClear(renderer);
 		SDL_RenderCopy(renderer, background, NULL, NULL);
 
 		while (SDL_PollEvent(&ev) != 0) {
