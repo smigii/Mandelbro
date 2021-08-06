@@ -7,13 +7,11 @@ Mandelbrot::Mandelbrot(int w, int h, SDL_Renderer* renderer)
 
 }
 
-SDL_Surface* Mandelbrot::draw()
+SDL_Texture* Mandelbrot::draw()
 {
-	SDL_Surface surface;
-
-	surface.w = width;
-	surface.h = height;
-	surface.
+	SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, width, height);
+	Uint32* pixels = new Uint32[width * height];
+	memset(pixels, 255, width * height * sizeof(Uint32));
 
 	ldouble real_f = real_s + factor;
 	ldouble imag_f = imag_s + factor;
@@ -37,12 +35,15 @@ SDL_Surface* Mandelbrot::draw()
 			int g = bright;
 			int b = bright;// map(sqrt(bright), 0, sqrt(255), 0, 255);
 
-			SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-			SDL_RenderDrawPoint(renderer, x, y);
-			
-
+			//SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+			//SDL_RenderDrawPoint(renderer, x, y);
+			pixels[y * width + x] = bright;
+		
 		}
 	}
+	SDL_UpdateTexture(texture, NULL, pixels, width * sizeof(Uint32));
+	return texture;
+	
 }
 
 int Mandelbrot::compute(std::complex<ldouble> c)

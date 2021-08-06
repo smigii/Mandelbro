@@ -29,7 +29,7 @@ private:
 public:
 	Mandelbrot(int w, int h, SDL_Renderer* renderer);
 
-	SDL_Surface* draw();
+	SDL_Texture* draw();
 
 };
 
