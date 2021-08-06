@@ -53,6 +53,10 @@ int main(int argc, char** argv)
 				break;
 			case SDL_MOUSEBUTTONUP:
 				mouse_held = false;
+				
+				mandel->update(rect.x, rect.y, rect.w);
+				drawn = false;
+
 				break;
 			case SDL_QUIT:
 				running = false;

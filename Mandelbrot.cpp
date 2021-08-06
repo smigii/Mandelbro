@@ -64,3 +64,33 @@ int Mandelbrot::compute(std::complex<ldouble> c)
 
 	return n;
 }
+
+/*
+void Mandelbrot::set_real_s(ldouble val)
+{
+	real_s = val;
+}
+
+void Mandelbrot::set_imag_s(ldouble val)
+{
+	imag_s = val;
+}
+
+void Mandelbrot::set_factor(ldouble val)
+{
+	factor = val;
+}
+*/
+
+void Mandelbrot::update(int x, int y, int size)
+{
+	real_s = map(x, 0, width, real_s, real_s + factor);
+
+	ldouble excess = (width - height) / 2;
+	ldouble y_min = -excess;
+	ldouble y_max = height + excess;
+	imag_s = map(y, y_min, y_max, imag_s, imag_s + factor);
+
+	factor *= ((ldouble)size / (ldouble)width);
+
+}
