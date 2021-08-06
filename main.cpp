@@ -98,21 +98,4 @@ int main(int argc, char** argv)
 
 /* ============================================================================
 Started from https://www.youtube.com/watch?v=KnCNfBb2ODQ
-
-TODO:
-1.	Add a UI
-		1a.	progress bar for render
-		1b.	save render
-		1c.	back to start
-		1d.	back 1 level
-			We will need to keep track of imag_s, real_s and factor values in some
-			container
-		1e.	Zoom box color?
-		1f.	Color filters and stuff for render
-			Should NOT have to re-render
-
-2.	Fix selection box
-
-3.	Generalise the screen ratio offset thing
-	Should work for windows that are taller than wider!
 ============================================================================ */
