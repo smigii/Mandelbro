@@ -1,5 +1,5 @@
 #include <SDL.h>
-
+#include <algorithm>
 // KEYBOARD ACCESS
 #ifdef _WIN32 || _WIN64
 #include <Windows.h>
@@ -9,8 +9,8 @@
 
 typedef long double ldouble;
 
-int SCR_WIDTH = 1920*0.9;
-int SCR_HEIGHT = 1080*0.9;
+int SCR_WIDTH = 1920;
+int SCR_HEIGHT = 1080;
 float SCR_WH_RATIO = (float)SCR_WIDTH / (float)SCR_HEIGHT;
 
 
@@ -30,6 +30,7 @@ int main(int argc, char** argv)
 
 	bool drawn = false;
 	bool mouse_held = false;
+	bool key_held = false;
 
 	SDL_Event ev;
 	SDL_Rect rect;
@@ -45,19 +46,30 @@ int main(int argc, char** argv)
 		SDL_RenderCopy(renderer, background, NULL, NULL);
 
 		while (SDL_PollEvent(&ev) != 0) {
+
 			switch (ev.type) {
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_held = true;
-				rect.x = ev.button.x;
+				rect.x = ev.button.x; 
 				rect.y = ev.button.y;
-				break;
+				break; 
 			case SDL_MOUSEBUTTONUP:
-				mouse_held = false;
-				
-				mandel->update(rect.x, rect.y, rect.w);
-				drawn = false;
-
+				if (mouse_held) {
+					mouse_held = false;
+					mandel->update(rect.x, rect.y, rect.w);
+					drawn = false;
+				}
 				break;
+
+			case SDL_KEYDOWN:
+				mouse_held = false;
+				{
+					SDL_Scancode sc = ev.key.keysym.scancode;
+					if (sc == SDL_SCANCODE_ESCAPE || sc == SDL_SCANCODE_Q)
+						running = false;
+				}
+				break;
+
 			case SDL_QUIT:
 				running = false;
 				break;
@@ -68,8 +80,11 @@ int main(int argc, char** argv)
 			int nx;
 			int ny;
 			SDL_GetMouseState(&nx, &ny);
-			rect.w = nx - rect.x;
-			rect.h = ny - rect.y;
+			rect.w = abs(nx - rect.x);
+			rect.h = abs(ny - rect.y);
+			
+			rect.w > rect.h ? rect.h = rect.w : rect.w = rect.h;
+
 			SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
 			SDL_RenderDrawRect(renderer, &rect);
 		}

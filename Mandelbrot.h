@@ -31,9 +31,6 @@ public:
 
 	SDL_Texture* draw();
 
-	//void set_real_s(ldouble val);
-	//void set_imag_s(ldouble val);
-	//void set_factor(ldouble val);
 	void update(int x, int y, int size);
 
 };
