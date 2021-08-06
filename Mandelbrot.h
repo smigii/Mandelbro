@@ -9,16 +9,16 @@ class Mandelbrot
 	typedef long double ldouble;
 
 private:
-	ldouble REAL_S = -2;
-	ldouble REAL_F = 2;
-	ldouble IMAG_S = -2;
-	ldouble IMAG_F = 2;
-	ldouble FACTOR = 0.5;
+
+	ldouble real_s = -2.5;
+	ldouble imag_s = -2;
+
+	ldouble factor = 4.0;
 
 	int width;
 	int height;
 
-	int max_iter = 200;
+	int max_iter = 400;
 
 	int clamp = 0;
 
@@ -29,7 +29,7 @@ private:
 public:
 	Mandelbrot(int w, int h, SDL_Renderer* renderer);
 
-	void draw();
+	SDL_Surface* draw();
 
 };
 

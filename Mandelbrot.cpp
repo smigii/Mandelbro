@@ -7,8 +7,17 @@ Mandelbrot::Mandelbrot(int w, int h, SDL_Renderer* renderer)
 
 }
 
-void Mandelbrot::draw()
+SDL_Surface* Mandelbrot::draw()
 {
+	SDL_Surface surface;
+
+	surface.w = width;
+	surface.h = height;
+	surface.
+
+	ldouble real_f = real_s + factor;
+	ldouble imag_f = imag_s + factor;
+
 	for (int x = 0; x < width; x++) {
 
 		ldouble excess = (width - height) / 2;
@@ -16,20 +25,21 @@ void Mandelbrot::draw()
 		ldouble y_max = height + excess;
 		for (int y = 0; y < height; y++) {
 
-			ldouble imag = map(y, -excess, height + excess, IMAG_S, IMAG_F);
-			ldouble real = map(x, 0, width, REAL_S, REAL_F);
+			ldouble imag = map(y, -excess, height + excess, imag_s, imag_f);
+			ldouble real = map(x, 0, width, real_s, real_f);
 
 			int n = compute(std::complex<ldouble>(real, imag));
 
 			int bright = (n == max_iter) ? 0 : map(n, 0, max_iter, 0, 255);
 			//bright = (bright < clamp) ? 0 : bright;
 
-			int r = map(pow(bright, 2), 0, 6502, 0, 255);
+			int r = bright;// map(pow(bright, 2), 0, 6502, 0, 255);
 			int g = bright;
-			int b = map(sqrt(bright), 0, sqrt(255), 0, 255);
+			int b = bright;// map(sqrt(bright), 0, sqrt(255), 0, 255);
 
 			SDL_SetRenderDrawColor(renderer, r, g, b, 255);
 			SDL_RenderDrawPoint(renderer, x, y);
+			
 
 		}
 	}
